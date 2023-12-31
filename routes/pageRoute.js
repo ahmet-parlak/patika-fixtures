@@ -7,5 +7,6 @@ router.get('/', pageController.getIndexPage);
 router.get('/about', pageController.getAboutPage);
 router.get('/furnitures', pageController.getFurnituresPage);
 router.get('/contact', pageController.getContactPage);
+router.get('/login', pageController.getLoginPage);
 
 module.exports = router;

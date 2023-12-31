@@ -14,3 +14,7 @@ exports.getContactPage = (req, res) => {
   const currentPage = 'contact';
   res.status(200).render('contact', { currentPage });
 };
+exports.getLoginPage = (req, res) => {
+  const currentPage = 'login';
+  res.status(200).render('login', { currentPage });
+};
