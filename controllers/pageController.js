@@ -16,5 +16,13 @@ exports.getContactPage = (req, res) => {
 };
 exports.getLoginPage = (req, res) => {
   const currentPage = 'login';
-  res.status(200).render('login', { currentPage });
+
+  const loginOldVals = res.locals.flashMessages?.loginOldVals ?? [];
+  const registerOldVals = res.locals.flashMessages?.registerOldVals ?? [];
+
+  res.status(200).render('login', {
+    currentPage,
+    loginOldVals: loginOldVals[0],
+    registerOldVals: registerOldVals[0],
+  });
 };

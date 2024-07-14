@@ -4,8 +4,10 @@ const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 const fileUpload = require('express-fileupload');
 const methodOverride = require('method-override');
+const flash = require('connect-flash');
 require('dotenv').config();
 const pageRouter = require('./routes/pageRoute');
+const authRouter = require('./routes/authRoute');
 
 //DB Connection
 mongoose
@@ -20,7 +22,7 @@ const app = express();
 app.set('view engine', 'ejs');
 
 //GLOBAL VARIABLES
-global.userIN = null;
+global.user = null;
 
 //MIDDLEWARES
 app.use(express.static('public'));
@@ -34,15 +36,22 @@ app.use(
     store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
   })
 );
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.flashMessages = req.flash();
+  next();
+});
 app.use(fileUpload());
 app.use(methodOverride('_method', { methods: ['GET', 'POST'] }));
 
 //ROUTES
 app.use('*', (req, res, next) => {
-  userIN = req.session.user;
+  user = req.session.user;
   next();
 });
+
 app.use('/', pageRouter);
+app.use('/auth', authRouter);
 
 //LISTEN
 const port = process.env.PORT ?? 5000;

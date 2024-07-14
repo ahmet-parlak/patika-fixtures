@@ -8,11 +8,28 @@
 <div class="contact_section layout_padding">
   <div class="container">
     <div class="contact_section_2 w-100">
+
+      <% if(flashMessages.success){ %>
+      <!-- Success Alerts -->
+      <div class="success-alerts mt-3 text-center">
+        <div class="alert alert-success" role="alert">
+          <ul>
+            <% flashMessages.success.forEach(message => {
+            %>
+
+            <li> <%- message %> </li>
+
+            <% }); %>
+          </ul>
+        </div>
+      </div>
+      <% } %>
+
       <div class="row">
         <div class="col-md-6">
           <h1 class="contact_taital contact_heading">Login</h1>
           <form action="/auth/login" method="POST">
-            <input type="text" class="mail_text" placeholder="Email" name="email">
+            <input type="text" class="mail_text" placeholder="Email" name="email" value="<%= loginOldVals?.email ?? '' %>">
             <input type="password" class="mail_text" placeholder="Password" name="password">
             <input id="login_submit" hidden type="submit" value="login">
             <div class="btn_main">
@@ -23,8 +40,8 @@
         <div class="col-md-6 border-left">
           <h1 class="contact_taital contact_heading">Register</h1>
           <form action="/auth/register" method="POST">
-            <input type="text" class="mail_text" placeholder="Name" name="Name">
-            <input type="text" class="mail_text" placeholder="Email" name="Email">
+            <input type="text" class="mail_text" placeholder="Name" name="name" value="<%= registerOldVals?.name ?? '' %>" autocomplete="off">
+            <input type="text" class="mail_text" placeholder="Email" name="email" value="<%= registerOldVals?.email ?? '' %>" autocomplete="off">
             <input type="password" class="mail_text" placeholder="Password" name="password">
             <input id="register_submit" hidden type="submit" value="register">
             <div class="btn_main">
@@ -33,6 +50,22 @@
           </form>
         </div>
       </div>
+      <% if(flashMessages.errors){ %>
+      <!-- Error Alerts -->
+      <div class="error-alerts mt-3 text-center">
+        <div class="alert alert-danger" role="alert">
+          <ul>
+            <% flashMessages.errors.forEach(error => {
+          %>
+
+            <li> <%- error %> </li>
+
+            <% }); %>
+          </ul>
+        </div>
+      </div>
+      <% } %>
+
     </div>
   </div>
 </div>
