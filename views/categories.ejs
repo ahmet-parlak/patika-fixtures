@@ -1,0 +1,108 @@
+<!-- header -->
+<%- include('partials/_header') %>
+<style>
+  input.category-name,
+  input.category-name:focus {
+    border-color: #0b1442 !important;
+  }
+
+  button.category-name {
+    border-color: #0b1442 !important;
+    color: #0b1442;
+  }
+
+  button.category-name:hover {
+    background: #0b1442 !important;
+    color: #f1c643;
+  }
+</style>
+<!-- navigation -->
+<%- include('partials/_navigation') %>
+
+<!-- Panel -->
+<div class="blog_section layout_padding py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="blog_taital">Categories</h1>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="blog_section_2 layout_padding">
+
+      <%- include('partials/_alerts') %>
+
+      <div class="add-category">
+        <form action="" method="POST">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control category-name" name="name" placeholder="Category Name" aria-label="Category Name" aria-describedby="add-category-btn">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary category-name" type="submit" id="add-category-btn">Add Category</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% categories.forEach(category => { %>
+          <tr>
+            <th scope="row">1</th>
+            <td><%= category.name %></td>
+            <td>
+              <a class="edit-category-btn" href="#" onclick="editCategoryForm(this)" data-toggle="modal" data-target="#editCategory" category-name="<%= category.name %>" category="<%= category.id %>"><i data-toggle="tooltip" data-placement="top" title="Edit Category" class="fa fa-pencil" aria-hidden="true"></i>
+              </a>
+              <a href="categories/<%= category.id %>?_method=delete" class="ml-4" title="Remove" data-toggle="tooltip" data-placement="top"><i class="fa fa-trash-o" aria-hidden="true"></i>
+              </a>
+            </td>
+          </tr>
+          <% }) %>
+
+        </tbody>
+      </table>
+    </div>
+    <!-- Edit Category Modal -->
+    <div class="modal fade" id="editCategory" tabindex="-1" aria-labelledby="editCategoryLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <form id="editCategoryForm" action="" method="POST">
+            <div class="modal-body">
+              <input id="editCategoryName" type="text" class="mail_text my-4" placeholder="Category Name" name="name">
+              <input id="editCategoryId" type="hidden" name="category">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Update Category</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- footer -->
+<%- include('partials/_footer') %>
+
+<script>
+  function editCategoryForm(e) {
+    const editCategoryName = document.getElementById("editCategoryName");
+    const editCategoryId = e.getAttribute('category');
+    editCategoryName.value = e.getAttribute('category-name');
+
+    const action = `categories/${editCategoryId}?_method=PATCH`
+
+    document.getElementById("editCategoryForm").setAttribute("action", action)
+
+
+  }
+</script>

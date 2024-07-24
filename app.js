@@ -8,6 +8,7 @@ const flash = require('connect-flash');
 require('dotenv').config();
 const pageRouter = require('./routes/pageRoute');
 const authRouter = require('./routes/authRoute');
+const adminRouter = require('./routes/adminRoute');
 
 //DB Connection
 mongoose
@@ -52,6 +53,7 @@ app.use('*', (req, res, next) => {
 
 app.use('/', pageRouter);
 app.use('/auth', authRouter);
+app.use('/admin/', adminRouter);
 
 //LISTEN
 const port = process.env.PORT ?? 5000;

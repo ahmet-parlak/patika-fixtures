@@ -37,11 +37,17 @@
           <li class="<%= currentPage === 'about' ? 'active':'' %>"><a href="/about">About</a></li>
           <li class="<%= currentPage === 'furnitures' ? 'active':'' %>"><a href="/furnitures">Furnitures</a></li>
           <li class="<%= currentPage === 'contact' ? 'active':'' %>"><a href="/contact">Contact Us</a></li>
+          
+
+          <% if (user?.role == 'admin') { %>
+            <li class="<%= currentPage === 'admin' ? 'active':'' %>"><a href="/admin">Admin Panel</a></li>
+          <% } %>
+
 
           <% if (user) { %>
 
           <li class="<%= currentPage === 'user' ? 'active':'' %>"><a href="/user">Account</li>
-          <li class=""><a href="/auth/logout">Logout</a></li>
+          <li class="" data-toggle="tooltip" data-placement="bottom" title="Logout"><a href="/auth/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
           <% } else { %>
           <li class="<%= currentPage === 'login' ? 'active':'' %>"><a href="/login">Login</a></li>
           <% } %>
