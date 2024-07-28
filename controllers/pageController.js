@@ -1,5 +1,6 @@
 const Category = require('../models/Category');
 const Furniture = require('../models/Furniture');
+const User = require('../models/User');
 
 exports.getIndexPage = (req, res) => {
   const currentPage = 'index';
@@ -11,9 +12,45 @@ exports.getAboutPage = (req, res) => {
   res.status(200).render('about', { currentPage });
 };
 
-exports.getFurnituresPage = (req, res) => {
+exports.getFurnituresPage = async (req, res) => {
   const currentPage = 'furnitures';
-  res.status(200).render('furnitures', { currentPage });
+  const furnitures =
+    user?.role == 'admin'
+      ? await Furniture.find().populate('category')
+      : await Furniture.find({ status: 'active' }).populate('category');
+  res.status(200).render('furnitures', { currentPage, furnitures });
+};
+
+exports.getFurniturePage = async (req, res) => {
+  const currentPage = 'furniture';
+
+  const slug = req.params.slug;
+
+  try {
+    const furniture = await Furniture.findOne({ slug }).populate('category');
+
+    if (!furniture) {
+      req.flash('errors', ['Product not found!']);
+      res.status(403).redirect('/furnitures');
+      return;
+    }
+
+    if (user?.role === 'admin') {
+      res.status(200).render('furniture', { currentPage, furniture });
+      return;
+    }
+
+    if (furniture.status === 'active') {
+      res.status(200).render('furniture', { currentPage, furniture });
+    } else {
+      req.flash('errors', ['Not Authorized']);
+      res.status(403).redirect('/furnitures');
+    }
+  } catch (e) {
+    console.log(e);
+    req.flash('errors', ['Shomethings wrong! Please try again.']);
+    res.status(403).redirect('/furnitures');
+  }
 };
 
 exports.getContactPage = (req, res) => {
@@ -34,16 +71,23 @@ exports.getLoginPage = (req, res) => {
   });
 };
 
+exports.getUserPage = async (req, res) => {
+  const currentPage = 'account';
+
+  const userData = await User.findById(user.id)
+    .populate('reserved_furnitures.furniture')
+    .select('reserved_furnitures');
+
+  res.status(200).render('user', {
+    currentPage,
+    reservedFurnitures: userData.reserved_furnitures,
+  });
+};
+
 exports.getAdminPage = (req, res) => {
   const currentPage = 'admin';
 
   res.status(200).render('admin', { currentPage });
-};
-
-exports.getUsersPage = (req, res) => {
-  const currentPage = 'users';
-
-  res.status(200).render('users', { currentPage });
 };
 
 exports.getUsersPage = (req, res) => {

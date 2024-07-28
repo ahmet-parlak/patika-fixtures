@@ -9,6 +9,7 @@ require('dotenv').config();
 const pageRouter = require('./routes/pageRoute');
 const authRouter = require('./routes/authRoute');
 const adminRouter = require('./routes/adminRoute');
+const reserveRouter = require('./routes/reserveRoute');
 
 //DB Connection
 mongoose
@@ -54,6 +55,7 @@ app.use('*', (req, res, next) => {
 app.use('/', pageRouter);
 app.use('/auth', authRouter);
 app.use('/admin/', adminRouter);
+app.use('/furnitures/:slug/reserve', reserveRouter)
 
 //LISTEN
 const port = process.env.PORT ?? 5000;

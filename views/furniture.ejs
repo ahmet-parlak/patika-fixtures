@@ -1,0 +1,42 @@
+<!-- header -->
+<%- include('partials/_header') %>
+
+<!-- navigation -->
+<%- include('partials/_navigation') %>
+
+<!-- furnitures section start -->
+<div class="about_section layout_padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="about_taital">About The Furniture</h1>
+        <p class="about_text">Review the furniture details and reserve if you wish, we will contact you immediately!</p>
+      </div>
+    </div>
+    <%- include('partials/_alerts') %>
+    <div class="about_section_2 py-5">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="about_img"><img src="/images/about-img.png"></div>
+        </div>
+        <div class="col-md-6">
+          <% if (user?.role === 'admin') { %>
+          <h2>
+            <a href="/admin/products" class="badge badge-dark" title="edit" data-toggle="tooltip" data-placement="top"><%= furniture.status %></a>
+          </h2>
+          <% } %>
+          <div class="good_text pt-1"><%= furniture.name %></div>
+
+          <h3 class="font-weight-bold"><%= furniture.category.name %></h3>
+          <p class="making_text"><%= furniture.description %> </p>
+          <div class="read_bt"><a href="<%= furniture.slug %>/reserve">Reserve</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- furnitures section end -->
+
+<!--  footer -->
+<%- include('partials/_footer') %>

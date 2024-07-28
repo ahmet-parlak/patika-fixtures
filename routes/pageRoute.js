@@ -9,8 +9,11 @@ const router = express.Router();
 router.get('/', pageController.getIndexPage);
 router.get('/about', pageController.getAboutPage);
 router.get('/furnitures', pageController.getFurnituresPage);
+router.get('/furnitures/:slug', pageController.getFurniturePage);
 router.get('/contact', pageController.getContactPage);
 router.get('/login', guestMiddleware, pageController.getLoginPage);
+
+router.get('/user', authMiddleware, pageController.getUserPage);
 
 router.get(
   '/admin',

@@ -8,17 +8,17 @@ const UserSchema = new Schema({
   email: { type: String, unique: true, required: true, trim: true },
   password: { type: String, required: true },
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
-  reserved_products: [
+  reserved_furnitures: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product',
+      furniture: { type: mongoose.Schema.Types.ObjectId, ref: 'Furniture' },
+      date: { type: Date, default: Date.now },
     },
   ],
   created_at: { type: Date, default: Date.now },
 });
 
 UserSchema.pre('save', function (next) {
-  if (!this.isModified('password')) return next;
+  if (!this.isModified('password')) return next();
 
   bcrypt.hash(this.password, 10, (error, hash) => {
     this.password = hash;

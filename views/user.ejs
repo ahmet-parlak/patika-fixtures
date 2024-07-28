@@ -1,0 +1,53 @@
+<!-- header -->
+<%- include('partials/_header') %>
+
+<!-- navigation -->
+<%- include('partials/_navigation') %>
+
+<!-- furnitures section start -->
+<div class="blog_section py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="blog_taital">Account</h1>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="blog_section_2 my-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 class="blog_taital">Reserved Furnitures</h1>
+          </div>
+        </div>
+      </div>
+      <%- include('partials/_alerts') %>
+      <div class="row">
+        <% reservedFurnitures.forEach(reserved => { %>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="blog_box">
+            <a href="furnitures/<%= reserved.furniture.slug %>">
+              <div class="blog_img"><img src="/images/blog-img1.png"></div>
+            </a>
+            <a href="furnitures/<%= reserved.furniture.slug %>">
+              <h2 class="text-center"><%= reserved.furniture.name %></h2>
+            </a>
+            <p class="chair_text"><%= reserved.furniture.category.name %></p>
+            <div class="readmore_bt pt-4"><a href="furnitures/<%= reserved.furniture.slug %>/reserve?_method=delete" data-toggle="tooltip" data-placement="top" title="Cancel the Reservation">Cancel</a></div>
+          </div>
+        </div>
+
+
+        <% }) %>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- furnitures section end -->
+
+<!--  footer -->
+<%- include('partials/_footer') %>

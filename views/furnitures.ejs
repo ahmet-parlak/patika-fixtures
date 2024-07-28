@@ -5,41 +5,34 @@
 <%- include('partials/_navigation') %>
 
 <!-- furnitures section start -->
-<div class="furnitures_section layout_padding">
+<div class="blog_section py-5">
   <div class="container">
     <div class="row">
-      <div class="col-sm-12">
-        <h1 class="furnitures_taital">Our Furnitures Work</h1>
-        <p class="furnitures_text">reader will be distracted by the readable content of a page when looking at its layout. </p>
-      </div>
-    </div>
-    <div class="furnitures_section_2">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="hover01 column">
-            <figure><img src="images/img-1.png"></figure>
-          </div>
-          <h3 class="introduction_text">Bedroom</h3>
-          <div class="seemore_bt"><a href="#">See More</a></div>
-        </div>
-        <div class="col-md-4">
-          <div class="hover01 column">
-            <figure><img src="images/img-2.png"></figure>
-          </div>
-          <h3 class="introduction_text">Office</h3>
-          <div class="seemore_bt active"><a href="#">See More</a></div>
-        </div>
-        <div class="col-md-4">
-          <div class="hover01 column">
-            <figure><img src="images/img-3.png"></figure>
-          </div>
-          <h3 class="introduction_text">Bathroom</h3>
-          <div class="seemore_bt"><a href="#">See More</a></div>
-        </div>
+      <div class="col-md-12">
+        <h1 class="blog_taital">Furnitures</h1>
       </div>
     </div>
   </div>
+  <div class="container">
+    <div class="blog_section_2 my-4">
+      <%- include('partials/_alerts') %>
+      <div class="row">
+        <% furnitures.forEach(furniture => { %>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="blog_box">
+            <div class="blog_img"><img src="/images/blog-img1.png"></div>
+            <h2 class="text-center"><%= furniture.name %></h2>
+            <p class="chair_text"><%= furniture.category.name %></p>
+            <div class="readmore_bt pt-4"><a href="furnitures/<%= furniture.slug %>">See More</a></div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+
+  </div>
 </div>
+
 <!-- furnitures section end -->
 
 <!--  footer -->
