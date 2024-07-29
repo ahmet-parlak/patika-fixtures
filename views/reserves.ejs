@@ -1,0 +1,54 @@
+<!-- header -->
+<%- include('partials/_header') %>
+
+<!-- navigation -->
+<%- include('partials/_navigation') %>
+
+<!-- Panel -->
+<div class="blog_section layout_padding py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="blog_taital">Reserves</h1>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="blog_section_2 layout_padding">
+
+      <%- include('partials/_alerts') %>
+
+      <table class="table text-center">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">User</th>
+            <th scope="col">E-Mail</th>
+            <th scope="col">Furniture</th>
+            <th scope="col">Category</th>
+            <th scope="col">Reservation Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% reserves?.forEach((reserve,i) => { %>
+          <% reserve.reserved_furnitures.forEach(reservation => { %>
+          <tr>
+            <th scope="row"><%= i+1 %></th>
+            <td class="user"><%= reserve.name %></td>
+            <td class="email"><%= reserve.email %></td>
+            <td class="furniturename"><%= reservation.furniture.name %></td>
+            <td class="category"><%= reservation.furniture.category.name %></td>
+            <td class="date"><%= reservation.date %></td>
+          </tr>
+          <% }) %>
+
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- footer -->
+<%- include('partials/_footer') %>

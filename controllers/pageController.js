@@ -90,10 +90,12 @@ exports.getAdminPage = (req, res) => {
   res.status(200).render('admin', { currentPage });
 };
 
-exports.getUsersPage = (req, res) => {
+exports.getUsersPage = async (req, res) => {
   const currentPage = 'users';
 
-  res.status(200).render('users', { currentPage });
+  const users = await User.find();
+
+  res.status(200).render('users', { currentPage, users });
 };
 
 exports.getProductsPage = async (req, res) => {
@@ -113,8 +115,17 @@ exports.getCategoriesPage = async (req, res) => {
   res.status(200).render('categories', { currentPage, categories });
 };
 
-exports.getReservesPage = (req, res) => {
+exports.getReservesPage = async (req, res) => {
   const currentPage = 'reserves';
 
-  res.status(200).render('reserves', { currentPage });
+  const reserves = await User.find({
+    reserved_furnitures: { $exists: true, $not: { $size: 0 } },
+  }).populate({
+    path: 'reserved_furnitures.furniture',
+    populate: { path: 'category' },
+  });
+
+  console.log(reserves[0].reserved_furnitures);
+
+  res.status(200).render('reserves', { currentPage, reserves });
 };
